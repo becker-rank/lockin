@@ -28,35 +28,17 @@ DampCtrl = 20.0 #control duty cicle amplitude [30,70]
 DampDist = 0.0 #amplitude for disturbance duty cicle
 WARMUP_PERIODS = 100 #number of duty cicle periods before each block
 MAX_DELAY_US = 100  #maximum time in us of delay for each aquisition
-MAX_FAILURES = 5    #maximum number of failures before program is aborted
-MAX_BLOCKS = 0      #maximum number of valid blocks. For =0 there is no limit
-LOG_RAW = True # export va,vb, vd if true
 
   
 
+
 class lockinParameters:
     def __init__(self):
-        """Class for storing the lockin parameters"""
         self.amp = self.phi = self.i = self.q = 0.0
         self.a = [0, 0, 0, 0]
         self.b = [0, 0, 0, 0]
-        self.ta = [0, 0, 0, 0]
-        self.tb = [0, 0, 0, 0]
         self.n = N
         self.raw_a = array('H', [0] * (4 * N))
         self.raw_b = array('H', [0] * (4 * N))
-        self.raw_ta = array('i', [0] * (4 * N))
-        self.raw_tb = array('i', [0] * (4 * N))
-        self.i_cycles = array('f', [0.0] * N)
-        self.q_cycles = array('f', [0.0] * N)
-        self.amp_cycles = array('f', [0.0] * N)
-        self.phi_cycles = array('f', [0.0] * N)
-        self.i_mean = self.q_mean = self.amp_mean = 0.0
-        self.phi_mean = self.std_amp_cycles = float('nan')
-        self.valid = False
-        self.max_delay_us = self.max_ab_us = self.clip_count = 0
-        self.time_s = 0.0
-        self.damp_ctrl = DampCtrl
-        self.damp_dist = DampDist
-
-
+        self.i_mean = self.q_mean = self.amp_mean = self.phi_mean = 0.0
+        self.std_amp_cycles = 0.0
