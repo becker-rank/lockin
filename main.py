@@ -19,7 +19,7 @@ def main():
     try:
         while True:
             function.refresh_tables()  #calculates duty cicle table
-            t_ref = time.ticks_add(time.ticks_us(), 2_000)  #adds 2000 us (time margin)
+            t_ref = time.ticks_add(time.ticks_us(), 2_000)  #t_ref: time to start acquisiton block
 
             if not acquisition.acquire(p, pwm_ctrl, pwm_dist, t_ref):
                 print("Aquisicao atrasada; repetindo o bloco.")
@@ -39,5 +39,5 @@ def main():
         print("programa interrompido")
         for pwm, pin in ((pwm_ctrl, config.PIN_CTRL), (pwm_dist, config.PIN_DIST)):
             pwm.duty_u16(0)
-            pwm.deinit()
+            pwm.deinit() #
             Pin(pin, Pin.OUT, value=0)

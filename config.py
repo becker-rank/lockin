@@ -1,5 +1,5 @@
 #pins, parameters, classes, ...
-
+import array
 
 #PINS
 PIN_CTRL = 14   #Control led: gpio14

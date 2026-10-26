@@ -1,8 +1,7 @@
-"""Lock-in de quatro fases e média de I/Q em N períodos."""
 import math
 
 
-def lockIn(p, Vref):
+def lockIn(p, Vref):    #calculates p.i, p.q, p.amp and p.phi for one cycle
     scale = Vref / 65535.0
     x0 = (p.a[0] - p.b[0]) * scale
     x90 = (p.a[1] - p.b[1]) * scale
@@ -15,26 +14,27 @@ def lockIn(p, Vref):
 
 
 def update_stats(count, mean, m2, value):
-    """Atualiza média e soma dos desvios quadráticos sem guardar um histórico."""
+    """through updates, calculates the mean and variance incrementally."""
     count += 1
     delta = value - mean
-    mean += delta / count
-    m2 += delta * (value - mean)
+    mean += delta / count    #updates the mean value
+    m2 += delta * (value - mean)  #updates the variance
     return count, mean, m2
 
 
 def sample_std(count, m2):
-    """Desvio-padrão amostral; requer pelo menos duas medidas."""
-    return math.sqrt(max(0.0, m2) / (count - 1)) 
+    """Standard Deviation for the measures."""
+    return math.sqrt(max(0.0, m2) / (count - 1))   #return 0 if only 1 measure was made.
 
 
 def average(p, Vref):
     """Returns the mean value of p.i and p.q for p.n measures."""
     sum_i = sum_q = 0.0
-    count, mean_amp, m2_amp = 0, 0.0, 0.0
+    count = 0
+    mean_amp = m2_amp =  0.0, 0.0
 
     for cycle in range(p.n):
-        for k in range(4):
+        for k in range(4):     #passes one cycle measures to lockIn.
             p.a[k] = p.raw_a[4 * cycle + k]
             p.b[k] = p.raw_b[4 * cycle + k]
         lockIn(p, Vref)
