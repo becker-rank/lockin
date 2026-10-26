@@ -11,7 +11,7 @@ def init():   #initialize ldrA and ldrB
     ldrB = ADC(Pin(config.PIN_LDRB))
 
 
-def acquire(p, pwm_ctrl, pwm_dist, t_ref):    #CHECK IF OK
+def acquire(p, pwm_ctrl, pwm_dist, t_ref):    #acquisiton
     function.begin_block(t_ref)
     warmup_steps = config.WARMUP_PERIODS * config.POINTS
     total_steps = warmup_steps + p.n * config.POINTS

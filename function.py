@@ -13,9 +13,9 @@ def percent_to_u16(percent):
 
 
 def init():
-    """Calcula o seno uma vez e inicia a referência da perturbação."""
+    """Calculates sine table, initiates time reference"""
     global _sine, _last_ref, _dist_start_us
-    _sine = [math.sin(2 * math.pi * k / config.POINTS)
+    _sine = [math.sin(2 * math.pi * k / config.POINTS)    #_sine array holds POINTSth values of sin between [0,2pi]
              for k in range(config.POINTS)]
     _last_ref = time.ticks_us()
     _dist_start_us = 0
@@ -23,8 +23,8 @@ def init():
 
 
 def refresh_tables():
-    """Recalcula os duties entre blocos, após uma mudança do controle."""
-    global _ctrl, _dist
+    """Calculates the duty cicles, using the sine table"""
+    global _ctrl, _dist    #both arrays with POINTS-th elements
     _ctrl = [percent_to_u16(config.Dmean + config.DampCtrl * s) for s in _sine]
     _dist = [percent_to_u16(config.Dmean + config.DampDist * s) for s in _sine]
 
